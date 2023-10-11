@@ -8,7 +8,7 @@ import orderRouter from './order/order.router.js';
 import userRouter from './user/user.router.js';
 export const initApp = (express,app)=>{
     connectDB();
-    app.use('/',(req,res)=>{
+    app.get('/',(req,res)=>{
         return res.json({message:"Hello...!"})
     });
     app.use(express.json());
