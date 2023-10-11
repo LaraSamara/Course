@@ -1,0 +1,11 @@
+import { Router } from "express";
+import { auth } from "../../middleware/auth.js";
+import * as orderController from './controller/order.controller.js';
+import * as validators from './order.validation.js';
+import { endpoints } from "./order.endpoint.js";
+import { validation } from "../../middleware/validation.js";
+const router = Router();
+router.post('/',auth(endpoints.create),validation(validators.createOrderSchema),orderController.createOrder);
+router.post('/all',auth(endpoints.create),validation(validators.addAllFromCartSchema),orderController.addAllFromCart);
+router.post('/now',auth(endpoints.create),validation(validators.orderNowSchema),orderController.orderNow);
+export default router;

@@ -1,0 +1,12 @@
+import { Router } from "express";
+import * as cartController from './controller/cart.controller.js';
+import { auth } from "../../middleware/auth.js";
+import { endpoints } from "./cart.endpoint.js";
+import * as validators from './cart.validation.js';
+import { validation } from "../../middleware/validation.js";
+const router = Router();
+router.post('/',auth(endpoints.addToCart),validation(validators.addToCartSchema),cartController.addToCart);
+router.delete('/',auth(endpoints.remove),validation(validators.removeFromCartSchema),cartController.removeFromCart);
+router.patch('/',auth(endpoints.clear),cartController.clearCart);
+router.get('/',auth(endpoints.get),cartController.getCart);
+export default router;

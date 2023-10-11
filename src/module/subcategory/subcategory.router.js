@@ -1,0 +1,15 @@
+import { Router } from "express";
+import * as subcategoryController from './controller/subcategory.controller.js';
+import { auth } from "../../middleware/auth.js";
+import { endpoints } from "./subcategory.endpoint.js";
+import * as validators from './subcategory.validation.js';
+import { validation } from "../../middleware/validation.js";
+import topicRouter from '../topic/topic.router.js';
+const router = Router({mergeParams:true});
+router.post('/',auth(endpoints.create),validation(validators.createSubCategorySchema),subcategoryController.createSubCategory);
+router.put('/:subcategoryId',auth(endpoints.update),validation(validators.updateSubcategorySchema),subcategoryController.updateSubcategory);
+router.get('/',auth(endpoints.get),validation(validators.getSubcategoriesSchema),subcategoryController.getSubcategories);
+router.get('/:subcategoryId',auth(endpoints.get),validation(validators.getSpeceficCategorySchema),subcategoryController.getSpeceficCategory);
+router.delete('/:subcategoryId',auth(endpoints.delete),validation(validators.deleteSubcategorySchema),subcategoryController.deleteSubcategory);
+router.use('/:subcategoryId/topic',topicRouter);
+export default router;

@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { auth } from "../../middleware/auth.js";
+import { validation } from "../../middleware/validation.js";
+import * as validators from './review.validation.js';
+import * as reviewController from './controller/review.controller.js';
+import { endpoints } from "./review.endpoint.js";
+const router = Router({mergeParams:true});
+router.post('/',auth(endpoints.create),validation(validators.createReviewSchema),reviewController.createReview);
+router.put('/:reviewId',auth(endpoints.update),validation(validators.updateReviewSchema),reviewController.updateReview);
+router.delete('/:reviewId',auth(endpoints.delete),validation(validators.deleteReviewSchema),reviewController.deleteReview);
+router.patch('/:reviewId/like',auth(endpoints.like),validation(validators.likeReviewSchema),reviewController.likeReview);
+router.patch('/:reviewId/unlike',auth(endpoints.unlike),validation(validators.unLikeReviewSchema),reviewController.unLikeReview);
+export default router;

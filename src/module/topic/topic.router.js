@@ -1,0 +1,16 @@
+import { Router } from "express";
+import * as topicController from './controller/topic.controller.js';
+import { auth } from "../../middleware/auth.js";
+import { endpoints } from "./topic.endpoint.js";
+import { fileUpload, fileValidation } from "../../services/multer.js";
+import { validation } from "../../middleware/validation.js";
+import * as validators from './topic.validation.js';
+import courseRouter from '../course/course.router.js';
+const router = Router({mergeParams:true});
+router.post('/',auth(endpoints.create),fileUpload(fileValidation.image).single('image'),validation(validators.createTopicSchema),topicController.createTopic);
+router.put('/:topicId',auth(endpoints.update),fileUpload(fileValidation.image).single('image'),validation(validators.updateTopicSchema),topicController.updateTopic);
+router.get('/',auth(endpoints.get),validation(validators.getTopicsSchema),topicController.getTopics);
+router.get('/:topicId',auth(endpoints.get),validation(validators.getSpecificTopicSchema),topicController.getSpecificTopic);
+router.delete('/:topicId',auth(endpoints.delete),validation(validators.deleteTopicSchema),topicController.deleteTopic);
+router.use('/:topicId/course',courseRouter);
+export default router;

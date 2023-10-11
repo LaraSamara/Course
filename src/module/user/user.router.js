@@ -1,0 +1,13 @@
+import { Router } from "express";
+import * as validators from './user.validation.js';
+import * as userController from './controller/user.controller.js';
+import { auth } from "../../middleware/auth.js";
+import { endpoints } from "./user.endpoint.js";
+import { validation } from "../../middleware/validation.js";
+const router = Router();
+router.patch('/status',auth(endpoints.updateAdminStatue),validation(validators.updateAdminStatueSchema),userController.updateAdminStatue);
+router.patch('/role',auth(endpoints.changeRole),validation(validators.changeRoleSchema),userController.changeRole);
+router.patch('/blockUser',auth(endpoints.BlockUser),validation(validators.BlockUserSchema),userController.BlockUser);
+router.patch('/unblockUser',auth(endpoints.unBlockUser),validation(validators.unBlockUserSchema),userController.unBlockUser);
+router.put('/',auth(endpoints.updateInformation),validation(validators.updateInformationSchema),userController.updateInformation);
+export default router;

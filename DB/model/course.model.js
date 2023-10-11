@@ -1,0 +1,80 @@
+import mongoose, { Schema, Types,model } from "mongoose";
+const courseSchema = new Schema({
+    name:{
+        type:String,
+        required:true,
+        trim:true,
+    },
+    slug:{
+        type:String,
+        required:true,
+    },
+    description:{
+        type:String,
+        required:true,
+    },
+    price:{
+        type:Number,
+        required:true
+    },
+    includes:{
+        type:String,
+        required:true,
+    },
+    learnAbout:{
+        type:String,
+        required:true,
+    },
+    courseContent:{
+        type:String,
+        required:true,
+    },
+    requirements:{
+        type:String,
+        required:true,
+    },
+    previewVideo:{
+        type:Object,
+        required:true
+    },
+    categoryId:{
+        type:Types.ObjectId,
+        ref:'Category',
+        required:true
+    },
+    subcategoryId:{
+        type:Types.ObjectId,
+        ref:'Subcategory',
+        required:true
+    },
+    topicId:{
+        type:Types.ObjectId,
+        ref:'Topic',
+        required:true
+    },
+    createdBy:{
+        type:Types.ObjectId,
+        ref:'User',
+        required:true
+    },
+    isUpdated:{
+        type:Boolean,
+        default:false
+    },
+    isDelete:{
+        type:Boolean,
+        default:false
+    }
+},{timestamps:true,toJSON:{virtuals:true},toObject:{virtuals:true}});
+courseSchema.virtual('review',{
+    localField:'_id',
+    foreignField:'courseId',
+    ref:'Review'
+});
+courseSchema.virtual('exercise',{
+    localField:'_id',
+    foreignField:'courseId',
+    ref:'Exercise'
+});
+const courseModel = mongoose.models.Course || model('Course',courseSchema);
+export default courseModel;

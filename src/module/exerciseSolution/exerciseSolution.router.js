@@ -1,0 +1,16 @@
+import { Router } from "express";
+import * as solutionController from './controller/exerciseSolution.controller.js';
+import * as validators from './exerciseSolution.validation.js';
+import { auth } from "../../middleware/auth.js";
+import { endpoints } from "./exerciseSolution.endpoint.js";
+import { fileUpload, fileValidation } from "../../services/multer.js";
+import { validation } from "../../middleware/validation.js";
+const router = Router({mergeParams:true});
+router.post('/',auth(endpoints.createSolution),fileUpload(fileValidation.file).single('file'),validation(validators.createSolutionSchema),solutionController.createSolution);
+router.put('/:solutionId',auth(endpoints.updateSolution),fileUpload(fileValidation.file).single('file'),validation(validators.updateSolutionSchema),solutionController.updateSolution);
+router.delete('/:solutionId',auth(endpoints.deleteSolution),validation(validators.deleteSolutionSchema),solutionController.deleteSolution);
+router.get('/',auth(endpoints.getSolutions),validation(validators.getSolutionsSchema),solutionController.getSolutions);
+router.get('/:solutionId',auth(endpoints.getSpecificSolution),validation(validators.getSpecificSolutionSchema),solutionController.getSpecificSolution);
+router.put('/:solutionId/mark',auth(endpoints.markSolution),validation(validators.markSolutionSchema),solutionController.markSolution);
+router.put('/:solutionId/updateMark',auth(endpoints.updateMarkSolution),validation(validators.updateMarkSchema),solutionController.updateMark);
+export default router;
