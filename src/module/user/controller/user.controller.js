@@ -94,7 +94,7 @@ export const updateInformation = asyncHandller(async(req,res,next)=>{
         if(match){
             return next(new Error(`new password match old one`));
         }
-        user.Password = hash(newPassword);
+        user.password = hash(newPassword);
     }
     await user.save();
     return res.status(200).json({message:"Susccess",user});

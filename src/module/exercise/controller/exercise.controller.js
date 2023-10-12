@@ -93,7 +93,7 @@ export const getExercise = asyncHandller(async(req,res,next)=>{
     if(!course){
         return next(new Error(`Course not found`,{cause:404}));
     }
-    const exercises = await exerciseModel.find({courseId,categoryId,subcategoryId,topicId});
+    const exercises = await exerciseModel.find({courseId});
     if(exercises.length==0){
         return next(new Error(`No exercises found`,{cause:404}));
     }

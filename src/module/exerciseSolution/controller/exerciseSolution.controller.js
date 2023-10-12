@@ -9,7 +9,7 @@ export const createSolution = asyncHandller(async(req,res,next)=>{
     if(!course){
         return next(new Error(`Course not found`,{cause:404}));
     }
-    let exercies = await exerciseModel.findByOne({_id:exerciseId,courseId});
+    let exercies = await exerciseModel.findOne({_id:exerciseId,courseId});
     if(!exercies){
         return next(new Error(`exercise not found`,{cause:404}));
     }
@@ -80,11 +80,11 @@ export const updateSolution = asyncHandller(async(req,res,next)=>{
 });
 export const deleteSolution = asyncHandller(async(req,res,next)=>{
     const{courseId,exerciseId,solutionId,categoryId,subcategoryId,topicId}=req.params;
-    const course = await courseModel.findOne({_id:courseId,isDeleted:false,categoryId,subcategoryId,topicId});
+    const course = await courseModel.findOne({_id:courseId,isDelete:false,categoryId,subcategoryId,topicId});
     if(!course){
         return next(new Error(`Course not found`,{cause:404}));
     }
-    let exercies = await exerciseModel.findByOne({_id:exerciseId,courseId});
+    let exercies = await exerciseModel.findOne({_id:exerciseId,courseId});
     if(!exercies){
         return next(new Error(`exercise not found`,{cause:404}));
     }
