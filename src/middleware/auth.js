@@ -1,4 +1,4 @@
-import userModel from "../../DB/model/User.model.js";
+import userModel from "../../DB/model/user.model.js";
 import { asyncHandller } from "../services/errorHandling.js";
 import { verifyToken } from "../services/generateAndVerifyToken.js";
 export const roles={
